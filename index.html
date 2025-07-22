@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TasteLog – Food Review</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+</head>
+<body>
+  <header>
+    <div class="logo">🍽️ TasteLog</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Restaurants</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="filter-bar">
+    <select id="filterCuisine">
+      <option value="">All Cuisines</option>
+      <option value="Indian">Indian</option>
+      <option value="Chinese">Chinese</option>
+      <option value="Italian">Italian</option>
+      <option value="Bangladeshi">Bangladeshi</option>
+    </select>
+
+    <select id="filterRestaurant">
+      <option value="">TYPE</option>
+      <option value="">Fine Dine</option>
+      <option value="">Hangout</option>
+      <option value="">Celebrations/Events</option>
+      <option value="">Street Food</option>
+
+    </select>
+
+    <select id="filterArea">
+      <option value="">All Areas</option>
+      <option value="Dhaka">Uttara</option>
+      <option value="New York">Merul Badda</option>
+      <option value="London">Gulshan 1</option>
+      <option value="London">Gulshan2</option>
+      <option value="London">Dhanmondi Satmasjid</option>
+      <option value="London">New Market</option>
+      <option value="London">Baily Road</option>
+      <option value="London">Diyabari</option>
+      <option value="London">Banani</option>
+      <option value="London">Banasree</option>
+    </select>
+
+    <button onclick="loadReviews()">Filter</button>
+  </div>
+
+  <div class="form-section">
+    <h2>Write a Review</h2>
+    <input id="title" placeholder="Dish Name" />
+    <input id="restaurant" placeholder="Restaurant" />
+    <input id="area" placeholder="Area" />
+    <input id="tags" placeholder="Tags (comma separated)" />
+    <textarea id="comment" placeholder="Write your review..."></textarea>
+
+    <div class="rating-input">
+      Rating:
+      <span class="star" data-value="1">☆</span>
+      <span class="star" data-value="2">☆</span>
+      <span class="star" data-value="3">☆</span>
+      <span class="star" data-value="4">☆</span>
+      <span class="star" data-value="5">☆</span>
+    </div>
+    <input type="hidden" id="rating" value="0" />
+    <button onclick="postReview()">Submit Review</button>
+  </div>
+
+  <main>
+    <div class="review-grid" id="reviewList"></div>
+  </main>
+
+  <section class="leaderboard-section">
+    <h2>🏆 Top-Rated Dishes</h2>
+    <ul id="leaderboardList"></ul>
+  </section>
+
+  <script>
+    async function loadReviews() {
+      const cuisine = document.getElementById('filterCuisine').value;
+      const restaurant = document.getElementById('filterRestaurant').value;
+      const area = document.getElementById('filterArea').value;
+
+      const res = await fetch(`http://localhost:3000/reviews?cuisine=${cuisine}&restaurant=${restaurant}&area=${area}`);
+      const data = await res.json();
+
+      const container = document.getElementById('reviewList');
+      container.innerHTML = data.map(r => `
+        <div class="card">
+          <div class="card-header">
+            <img src="https://randomuser.me/api/portraits/men/${Math.floor(Math.random()*90)}.jpg" class="avatar" />
+            <div>
+              <div class="name">${r.title}</div>
+              <div class="time">From: ${r.restaurant}, ${r.area}</div>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="source" />
+          </div>
+          <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+          <p class="comment">${r.comment}</p>
+          <small>Tags: ${r.tags.join(', ')}</small>
+          <br/>
+          <button onclick="editReview('${r.id}')">Edit</button>
+          <button onclick="deleteReview('${r.id}')">Delete</button>
+        </div>
+      `).join('');
+
+      const leaderboard = document.getElementById('leaderboardList');
+      const topRated = [...data].sort((a, b) => b.rating - a.rating).slice(0, 5);
+      leaderboard.innerHTML = topRated.map(d => `<li><strong>${d.title}</strong> – ${'★'.repeat(d.rating)} (${d.rating}/5)</li>`).join('');
+    }
+
+    async function postReview() {
+      const review = {
+        title: document.getElementById('title').value,
+        restaurant: document.getElementById('restaurant').value,
+        area: document.getElementById('area').value,
+        tags: document.getElementById('tags').value.split(',').map(t => t.trim()),
+        rating: parseInt(document.getElementById('rating').value),
+        comment: document.getElementById('comment').value
+      };
+      await fetch('http://localhost:3000/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(review)
+      });
+      loadReviews();
+    }
+
+    async function deleteReview(id) {
+      await fetch(`http://localhost:3000/reviews/${id}`, { method: 'DELETE' });
+      loadReviews();
+    }
+
+    function editReview(id) {
+      const newComment = prompt("Edit your comment:");
+      const newRating = prompt("Edit your rating (1-5):");
+      if (newComment && newRating) {
+        fetch(`http://localhost:3000/reviews/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ comment: newComment, rating: parseInt(newRating) })
+        }).then(() => loadReviews());
+      }
+    }
+
+    document.querySelectorAll('.star').forEach(star => {
+      star.addEventListener('click', function () {
+        const rating = this.getAttribute('data-value');
+        document.getElementById('rating').value = rating;
+        document.querySelectorAll('.star').forEach(s => {
+          s.textContent = parseInt(s.getAttribute('data-value')) <= rating ? '★' : '☆';
+        });
+      });
+    });
+
+    loadReviews();
+  </script>
+</body>
+</html>

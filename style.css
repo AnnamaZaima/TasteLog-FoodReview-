@@ -1,0 +1,146 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f6fa;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #2d3436;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  align-items: center;
+}
+
+header .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+header nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  background: white;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-bar select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+.form-section {
+  background: #ffffff;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.form-section input,
+.form-section textarea {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.card-header .name {
+  font-weight: bold;
+}
+
+.card-header .time {
+  font-size: 0.8em;
+  color: #777;
+}
+
+.card-header .source {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+}
+
+.stars {
+  color: #f1c40f;
+  font-size: 1.2em;
+  margin: 8px 0;
+}
+
+.rating-input .star {
+  font-size: 1.5em;
+  color: gold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.rating-input .star:hover {
+  transform: scale(1.2);
+}
+
+.leaderboard-section {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+.leaderboard-section h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.leaderboard-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.leaderboard-section li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1em;
+}
