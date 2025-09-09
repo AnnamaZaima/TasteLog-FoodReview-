@@ -1,0 +1,121 @@
+/* Homepage.css */
+.dashboard {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding-top: 30px;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  background-color: #f9b01b;
+  color: white;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+/* Filters Container */
+.filters-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px;
+}
+
+.filters {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filter {
+  margin-right: 20px;
+}
+
+.filter label {
+  display: block;
+}
+
+.options label {
+  display: block;
+  margin: 5px 0;
+}
+
+button {
+  background-color: #f9b01b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #d88b14;
+}
+
+.review-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.review-card {
+  background-color: white;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.review-card h3 {
+  font-size: 1.2rem;
+  color: #f9b01b;
+}
+
+.review-card p {
+  margin: 5px 0;
+}
+
+.review-card .rating {
+  font-weight: bold;
+}
+
+/* Floating Button for Create Review */
+.create-review-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.floating-btn {
+  background-color: #f9b01b;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.floating-btn:hover {
+  background-color: #d88b14;
+}

@@ -1,0 +1,51 @@
+/* client/src/styles/Layout.css */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 0;
+  min-height: calc(100vh - 70px - 120px); /* Account for nav and footer height */
+}
+
+.main-content.full-width {
+  padding: 0;
+}
+
+.main-content.auth-page {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0;
+  min-height: 100vh;
+}
+
+.main-content.no-padding {
+  padding: 0;
+}
+
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.page-container.narrow {
+  max-width: 800px;
+}
+
+.page-container.wide {
+  max-width: 1600px;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 20px 16px;
+  }
+  
+  .main-content {
+    min-height: calc(100vh - 60px - 100px);
+  }
+}

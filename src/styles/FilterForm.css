@@ -1,0 +1,15 @@
+/* FilterForm.css */
+.filter-form {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+  gap: 15px;
+}
+
+.filter-form select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 200px;
+}
